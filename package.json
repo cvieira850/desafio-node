@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/cvieira850/desafio-node/issues"
   },
-  "homepage": "https://github.com/cvieira850/desafio-node#readme"
+  "homepage": "https://github.com/cvieira850/desafio-node#readme",
+  "devDependencies": {
+    "git-commit-msg-linter": "^2.6.0"
+  }
 }
