@@ -1,4 +1,6 @@
 import { CreateCityController } from './createcity'
+import { MissingParamError } from '../../errors/missing-param-error'
+
 describe('Create City Controller', () => {
   test('Should return 400 if no name is provided ', () => {
     const sut = new CreateCityController()
@@ -9,7 +11,7 @@ describe('Create City Controller', () => {
     }
     const httpResponse = sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
-    expect(httpResponse.body).toEqual(new Error('Missing param: name'))
+    expect(httpResponse.body).toEqual(new MissingParamError('name'))
   })
   test('Should return 400 if no state is provided ', () => {
     const sut = new CreateCityController()
@@ -20,6 +22,6 @@ describe('Create City Controller', () => {
     }
     const httpResponse = sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
-    expect(httpResponse.body).toEqual(new Error('Missing param: state'))
+    expect(httpResponse.body).toEqual(new MissingParamError('state'))
   })
 })
