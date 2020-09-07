@@ -2,11 +2,12 @@ import { CityPgRepository } from './city'
 import { Connection, getConnection } from 'typeorm'
 import createConnection from '../typeorm/index'
 let connection: Connection
-describe('Account Pg Repository', () => {
+describe('City Pg Repository', () => {
   beforeAll(async () => {
     connection = await createConnection()
 
     await connection.query('DROP TABLE IF EXISTS cities')
+    await connection.query('DROP TABLE IF EXISTS clients')
     await connection.query('DROP TABLE IF EXISTS migrations')
 
     await connection.runMigrations()
@@ -14,6 +15,7 @@ describe('Account Pg Repository', () => {
 
   beforeEach(async () => {
     await connection.query('DELETE FROM cities')
+    await connection.query('DELETE FROM clients')
   })
 
   afterAll(async () => {

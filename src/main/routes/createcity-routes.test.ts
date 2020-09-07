@@ -9,6 +9,7 @@ describe('Create City Routes', () => {
     connection = await createConnection()
 
     await connection.query('DROP TABLE IF EXISTS cities')
+    await connection.query('DROP TABLE IF EXISTS clients')
     await connection.query('DROP TABLE IF EXISTS migrations')
 
     await connection.runMigrations()
@@ -16,6 +17,7 @@ describe('Create City Routes', () => {
 
   beforeEach(async () => {
     await connection.query('DELETE FROM cities')
+    await connection.query('DELETE FROM clients')
   })
 
   afterAll(async () => {
