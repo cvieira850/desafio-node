@@ -23,10 +23,14 @@ export class CreateCityController implements Controller {
       if (!isValid) {
         return badRequest(new InvalidParamError('state'))
       }
-      this.addCity.add({
+      const city = this.addCity.add({
         name,
         state
       })
+      return {
+        statusCode: 200,
+        body: city
+      }
     } catch (error) {
       return serverError()
     }
