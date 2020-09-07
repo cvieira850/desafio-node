@@ -10,13 +10,14 @@ export class CreateCityController implements Controller {
 
   handle (httpRequest: HttpRequest): HttpResponse {
     try {
+      const { state } = httpRequest.body
       const requiredFields = ['name','state']
       for (const field of requiredFields) {
         if (!httpRequest.body[field]) {
           return badRequest(new MissingParamError(field))
         }
       }
-      const isValid = this.stateValidator.isValid(httpRequest.body.state)
+      const isValid = this.stateValidator.isValid(state)
       if (!isValid) {
         return badRequest(new InvalidParamError('state'))
       }
