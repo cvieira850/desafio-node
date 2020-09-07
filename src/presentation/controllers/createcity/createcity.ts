@@ -1,10 +1,9 @@
 import { HttpRequest, HttpResponse } from '../../protocols/http'
 import { MissingParamError } from '../../errors/missing-param-error'
 import { InvalidParamError } from '../../errors/invalid-param-error'
-import { badRequest } from '../../helpers/http-helper'
+import { badRequest, serverError } from '../../helpers/http-helper'
 import { Controller } from '../../protocols/controller'
 import { StateValidator } from '../../protocols/state-validator'
-import { ServerError } from '../../errors/server-error'
 
 export class CreateCityController implements Controller {
   private readonly stateValidator: StateValidator
@@ -25,10 +24,7 @@ export class CreateCityController implements Controller {
         return badRequest(new InvalidParamError('state'))
       }
     } catch (error) {
-      return {
-        statusCode: 500,
-        body: new ServerError()
-      }
+      return serverError()
     }
   }
 }
