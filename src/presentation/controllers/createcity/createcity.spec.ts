@@ -5,15 +5,7 @@ interface SutTypes {
   sut: CreateCityController
   stateValidatorStub: StateValidator
 }
-const makeStateValidatorWithError = (): StateValidator => {
-  class StateValidatorStub implements StateValidator {
-    isValid (state: string): boolean {
-      throw new Error()
-    }
-  }
 
-  return new StateValidatorStub()
-}
 const makeStateValidator = (): StateValidator => {
   class StateValidatorStub implements StateValidator {
     isValid (state: string): boolean {
@@ -68,8 +60,10 @@ describe('Create City Controller', () => {
     expect(httpResponse.body).toEqual(new InvalidParamError('state'))
   })
   test('Should returns 500 if stateValidator throws', () => {
-    const stateValidatorStub = makeStateValidatorWithError()
-    const sut = new CreateCityController(stateValidatorStub)
+    const { sut, stateValidatorStub } = makeSut()
+    jest.spyOn(stateValidatorStub, 'isValid').mockImplementationOnce(() => {
+      throw new Error()
+    })
     const httpRequest = {
       body: {
         name: 'any_name',
