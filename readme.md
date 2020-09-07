@@ -2,7 +2,7 @@
 [![Author](https://img.shields.io/badge/author-CaioVieira-brightgreen)](https://github.com/cvieira850)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com)
 # 🚧 Instalação
-**Para rodar o projeto é necessário ter [Node.js](https://nodejs.org/en/download/) , [Yarn](https://yarnpkg.com/), [Docker]((https://docs.docker.com/docker-for-windows/install/)) e clonar o projeto**
+**Para rodar o projeto é necessário ter [Node.js](https://nodejs.org/en/download/) , [Yarn](https://yarnpkg.com/), [Docker](https://docs.docker.com/docker-for-windows/install/) e clonar o projeto**
 
 **Instalação das dependências**
 
@@ -37,7 +37,7 @@ Por último execute o comando
 
 > ## Bibliotecas e Ferramentas
 
-* NPM
+* Yarn
 * Typescript
 * Git
 * Docker
