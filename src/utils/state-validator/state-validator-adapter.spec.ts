@@ -1,5 +1,5 @@
 import { StateValidatorAdapter } from './state-validator'
-import { StateValidatorInterface } from '../infra/validators/protocols/state-validator'
+import { StateValidatorInterface } from '../../infra/validators/state-validator/protocols/state-validator'
 
 interface SutTypes {
   sut: StateValidatorAdapter

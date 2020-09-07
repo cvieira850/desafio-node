@@ -1,8 +1,8 @@
 import { CreateCityController } from '../../presentation//controllers/createcity/createcity'
-import { StateValidatorAdapter } from '../../utils/state-validator'
+import { StateValidatorAdapter } from '../../utils/state-validator/state-validator'
 import { DbAddCity } from '../../data/usecases/add-city/db-add-city'
 import { CityPgRepository } from '../../infra/bd/postgresql/city-repository/city'
-import { StateValidatorLib } from '../../infra/validators/state-validator'
+import { StateValidatorLib } from '../../infra/validators/state-validator/state-validator'
 
 export const makeCreateCityController = (): CreateCityController => {
   const stateValidatorLib = new StateValidatorLib()

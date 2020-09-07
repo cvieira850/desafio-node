@@ -1,5 +1,5 @@
-import { StateValidator } from '../presentation/protocols/state-validator'
-import { StateValidatorLib } from '../infra/validators/state-validator'
+import { StateValidator } from '../../presentation/protocols/state-validator'
+import { StateValidatorLib } from '../../infra/validators/state-validator/state-validator'
 
 export class StateValidatorAdapter implements StateValidator {
   private readonly stateValidatorlib: StateValidatorLib
