@@ -5,17 +5,51 @@
 **Para rodar o projeto é necessário ter [Node.js](https://nodejs.org/en/download/) , [Yarn](https://yarnpkg.com/), [Docker]((https://docs.docker.com/docker-for-windows/install/)) e clonar o projeto**
 
 **Instalação das dependências**
+
 ```yarn install```
 
 # Para rodar o projeto
 
 Primeiro rode o comando do docker
+
 ``` docker-compose up ```
 
 Depois execute o comando
+
 ``` yarn typeorm migration:run ```
 
 Por último execute o comando
+
 ``` yarn dev:server ```
 
+## Para executar testes
+* Testes unitários
+  
+``` yarn test:unit ```
 
+* Testes de integração
+    
+``` yarn test:integration ```
+
+* Gerar coverage
+
+``` yarn test:ci ```
+
+> ## Bibliotecas e Ferramentas
+
+* NPM
+* Typescript
+* Git
+* Docker
+* Jest
+* Express
+* Supertest
+* Husky
+* Lint Staged
+* Eslint
+* Standard Javascript Style
+* Ts-node
+* Pg
+* Typeorm
+* Moment
+* Fast-glob
