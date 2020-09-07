@@ -1,8 +1,6 @@
 import { CreateCityController } from './createcity'
 import { MissingParamError, ServerError, InvalidParamError } from '../../errors'
-import { StateValidator } from '../../protocols'
-import { CityModel } from '../../../domain/models/city'
-import { AddCity,AddCityModel } from '../../../domain/usecases/add-city'
+import { AddCity,AddCityModel, StateValidator, CityModel } from './createcity-protocols'
 
 interface SutTypes {
   sut: CreateCityController

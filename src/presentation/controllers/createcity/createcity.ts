@@ -1,7 +1,6 @@
-import { HttpRequest, HttpResponse, Controller, StateValidator } from '../../protocols'
+import { HttpRequest, HttpResponse, Controller, StateValidator, AddCity } from './createcity-protocols'
 import { MissingParamError, InvalidParamError } from '../../errors'
 import { badRequest, serverError } from '../../helpers/http-helper'
-import { AddCity } from '../../../domain/usecases/add-city'
 
 export class CreateCityController implements Controller {
   private readonly stateValidator: StateValidator
