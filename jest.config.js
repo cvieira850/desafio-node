@@ -4,7 +4,9 @@ module.exports = {
     '<rootDir>/src/**/*.ts',
     '!<rootDir>/src/**/*-protocols.ts',
     '!**/protocols/**',
-    '!**/test/**'
+    '!**/test/**',
+    '!<rootDir>/src/infra/validators/**',
+    '!<rootDir>/src/infra/bd/postgresql/typeorm/**'
   ],
   coverageDirectory: 'coverage',
   transform: {
