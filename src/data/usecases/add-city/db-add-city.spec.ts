@@ -47,4 +47,17 @@ describe('DbAddCity Usecase', () => {
     const promise = sut.add(cityData)
     await expect(promise).rejects.toThrow()
   })
+  test('Should return an city on success',async () => {
+    const { sut } = makeSut()
+    const cityData = {
+      name: 'valid_name',
+      state: 'valid_state'
+    }
+    const city = await sut.add(cityData)
+    expect(city).toEqual({
+      id: 'valid_id',
+      name: 'valid_name',
+      state: 'valid_state'
+    })
+  })
 })
