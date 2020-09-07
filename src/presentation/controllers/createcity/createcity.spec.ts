@@ -5,14 +5,25 @@ interface SutTypes {
   sut: CreateCityController
   stateValidatorStub: StateValidator
 }
+const makeStateValidatorWithError = (): StateValidator => {
+  class StateValidatorStub implements StateValidator {
+    isValid (state: string): boolean {
+      throw new Error()
+    }
+  }
 
-const makeSut = (): SutTypes => {
+  return new StateValidatorStub()
+}
+const makeStateValidator = (): StateValidator => {
   class StateValidatorStub implements StateValidator {
     isValid (state: string): boolean {
       return true
     }
   }
-  const stateValidatorStub = new StateValidatorStub()
+  return new StateValidatorStub()
+}
+const makeSut = (): SutTypes => {
+  const stateValidatorStub = makeStateValidator()
   const sut = new CreateCityController(stateValidatorStub)
   return {
     sut,
@@ -57,12 +68,7 @@ describe('Create City Controller', () => {
     expect(httpResponse.body).toEqual(new InvalidParamError('state'))
   })
   test('Should returns 500 if stateValidator throws', () => {
-    class StateValidatorStub implements StateValidator {
-      isValid (state: string): boolean {
-        throw new Error()
-      }
-    }
-    const stateValidatorStub = new StateValidatorStub()
+    const stateValidatorStub = makeStateValidatorWithError()
     const sut = new CreateCityController(stateValidatorStub)
     const httpRequest = {
       body: {
