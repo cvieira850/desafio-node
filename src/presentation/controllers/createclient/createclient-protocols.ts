@@ -1,0 +1,6 @@
+export * from '../../protocols'
+export * from '../../protocols/age-validator'
+export * from '../../protocols/genre-validator'
+export * from '../../protocols/birthdate-validator'
+export * from '../../../domain/usecases/add-client'
+export * from '../../../domain/models/client'
