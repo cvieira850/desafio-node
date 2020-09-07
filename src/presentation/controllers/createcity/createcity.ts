@@ -10,7 +10,7 @@ export class CreateCityController implements Controller {
     this.addCity = addCity
   }
 
-  handle (httpRequest: HttpRequest): HttpResponse {
+  async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
       const { name,state } = httpRequest.body
       const requiredFields = ['name','state']
@@ -23,7 +23,7 @@ export class CreateCityController implements Controller {
       if (!isValid) {
         return badRequest(new InvalidParamError('state'))
       }
-      const city = this.addCity.add({
+      const city = await this.addCity.add({
         name,
         state
       })
