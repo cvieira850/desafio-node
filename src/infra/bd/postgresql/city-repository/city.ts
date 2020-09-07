@@ -13,7 +13,6 @@ export class CityPgRepository implements AddCityRepository {
       cityData
     )
     const { name, state, id } = await UserRepository.save(UserCreated)
-    console.log(name, state, id)
     return {
       name,
       state,
