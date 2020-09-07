@@ -1,16 +1,19 @@
 import { HttpRequest, HttpResponse, Controller, StateValidator } from '../../protocols'
 import { MissingParamError, InvalidParamError } from '../../errors'
 import { badRequest, serverError } from '../../helpers/http-helper'
+import { AddCity } from '../../../domain/usecases/add-city'
 
 export class CreateCityController implements Controller {
   private readonly stateValidator: StateValidator
-  constructor (stateValidator: StateValidator) {
+  private readonly addCity: AddCity
+  constructor (stateValidator: StateValidator, addCity: AddCity) {
     this.stateValidator = stateValidator
+    this.addCity = addCity
   }
 
   handle (httpRequest: HttpRequest): HttpResponse {
     try {
-      const { state } = httpRequest.body
+      const { name,state } = httpRequest.body
       const requiredFields = ['name','state']
       for (const field of requiredFields) {
         if (!httpRequest.body[field]) {
@@ -21,6 +24,10 @@ export class CreateCityController implements Controller {
       if (!isValid) {
         return badRequest(new InvalidParamError('state'))
       }
+      this.addCity.add({
+        name,
+        state
+      })
     } catch (error) {
       return serverError()
     }
