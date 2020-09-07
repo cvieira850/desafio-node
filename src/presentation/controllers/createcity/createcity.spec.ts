@@ -2,7 +2,7 @@ import { CreateCityController } from './createcity'
 import { MissingParamError } from '../../errors/missing-param-error'
 import { InvalidParamError } from '../../errors/invalid-param-error'
 import { StateValidator } from '../../protocols/state-validator'
-
+import { ServerError } from '../../errors/server-error'
 interface SutTypes {
   sut: CreateCityController
   stateValidatorStub: StateValidator
@@ -57,5 +57,23 @@ describe('Create City Controller', () => {
     const httpResponse = sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body).toEqual(new InvalidParamError('state'))
+  })
+  test('Should returns 500 if stateValidator throws', () => {
+    class StateValidatorStub implements StateValidator {
+      isValid (state: string): boolean {
+        throw new Error()
+      }
+    }
+    const stateValidatorStub = new StateValidatorStub()
+    const sut = new CreateCityController(stateValidatorStub)
+    const httpRequest = {
+      body: {
+        name: 'any_name',
+        state: 'any_state'
+      }
+    }
+    const httpResponse = sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(500)
+    expect(httpResponse.body).toEqual(new ServerError())
   })
 })
