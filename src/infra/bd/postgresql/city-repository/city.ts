@@ -8,11 +8,11 @@ import City from '../typeorm/entities/City'
 // import User from '../typeorm/entities/user'
 export class CityPgRepository implements AddCityRepository {
   async add (cityData: AddCityModel): Promise<CityModel> {
-    const UserRepository = getRepository(City)
-    const UserCreated = UserRepository.create(
+    const CityRepository = getRepository(City)
+    const CityCreated = CityRepository.create(
       cityData
     )
-    const { name, state, id } = await UserRepository.save(UserCreated)
+    const { name, state, id } = await CityRepository.save(CityCreated)
     return {
       name,
       state,
