@@ -1,8 +1,6 @@
 import { CreateCityController } from './createcity'
-import { MissingParamError } from '../../errors/missing-param-error'
-import { InvalidParamError } from '../../errors/invalid-param-error'
+import { MissingParamError, ServerError, InvalidParamError } from '../../errors'
 import { StateValidator } from '../../protocols/state-validator'
-import { ServerError } from '../../errors/server-error'
 interface SutTypes {
   sut: CreateCityController
   stateValidatorStub: StateValidator
