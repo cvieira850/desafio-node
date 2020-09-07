@@ -1,11 +1,27 @@
 import { CreateCityController } from './createcity'
 import { MissingParamError, ServerError, InvalidParamError } from '../../errors'
 import { StateValidator } from '../../protocols'
+import { CityModel } from '../../../domain/models/city'
+import { AddCity,AddCityModel } from '../../../domain/usecases/add-city'
+
 interface SutTypes {
   sut: CreateCityController
   stateValidatorStub: StateValidator
+  addCityStub: AddCity
 }
-
+const makeAddCity = (): AddCity => {
+  class AddCityStub implements AddCity {
+    add (city: AddCityModel): CityModel {
+      const fakeCity = {
+        id: 'valid_id',
+        name: 'valid_name',
+        state: 'valid_state'
+      }
+      return fakeCity
+    }
+  }
+  return new AddCityStub()
+}
 const makeStateValidator = (): StateValidator => {
   class StateValidatorStub implements StateValidator {
     isValid (state: string): boolean {
@@ -16,10 +32,12 @@ const makeStateValidator = (): StateValidator => {
 }
 const makeSut = (): SutTypes => {
   const stateValidatorStub = makeStateValidator()
-  const sut = new CreateCityController(stateValidatorStub)
+  const addCityStub = makeAddCity()
+  const sut = new CreateCityController(stateValidatorStub, addCityStub)
   return {
     sut,
-    stateValidatorStub
+    stateValidatorStub,
+    addCityStub
   }
 }
 
@@ -86,5 +104,21 @@ describe('Create City Controller', () => {
     }
     sut.handle(httpRequest)
     expect(isValidSpy).toHaveBeenCalledWith('any_state')
+  })
+  test('Should call AddCity with correct values', () => {
+    const { sut, addCityStub } = makeSut()
+    const addSpy = jest.spyOn(addCityStub, 'add')
+
+    const httpRequest = {
+      body: {
+        name: 'valid_name',
+        state: 'valid_state'
+      }
+    }
+    sut.handle(httpRequest)
+    expect(addSpy).toHaveBeenCalledWith({
+      name: 'valid_name',
+      state: 'valid_state'
+    })
   })
 })
