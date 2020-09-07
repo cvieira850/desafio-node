@@ -35,7 +35,7 @@ Por último execute o comando
 
 ``` yarn test:ci ```
 
-> ## Bibliotecas e Ferramentas
+## Bibliotecas e Ferramentas
 
 * Yarn
 * Typescript
