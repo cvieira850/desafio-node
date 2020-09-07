@@ -119,4 +119,19 @@ describe('Create City Controller', () => {
       state: 'valid_state'
     })
   })
+  test('Should return 500 if AddCity throws', () => {
+    const { sut, addCityStub } = makeSut()
+    jest.spyOn(addCityStub,'add').mockImplementationOnce(() => {
+      throw new Error()
+    })
+    const httpRequest = {
+      body: {
+        name: 'any_name',
+        state: 'any_state'
+      }
+    }
+    const httpResponse = sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(500)
+    expect(httpResponse.body).toEqual(new ServerError())
+  })
 })
