@@ -37,4 +37,14 @@ describe('DbAddCity Usecase', () => {
       state: 'valid_state'
     })
   })
+  test('Should throw if AddCityRepository throws',async () => {
+    const { sut,addCityRepositoryStub } = makeSut()
+    jest.spyOn(addCityRepositoryStub,'add').mockReturnValueOnce(new Promise((resolve,reject) => reject(new Error())))
+    const cityData = {
+      name: 'valid_name',
+      state: 'valid_state'
+    }
+    const promise = sut.add(cityData)
+    await expect(promise).rejects.toThrow()
+  })
 })
