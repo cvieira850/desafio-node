@@ -14,7 +14,9 @@ Primeiro rode o comando do docker
 
 ``` docker-compose up ```
 
-Depois execute o comando
+Depois que o banco estiver online verificar se o banco está com a extensão uuid-ossp, caso não esteja instalar ela
+
+Depois rode  o comando
 
 ``` yarn typeorm migration:run ```
 
@@ -53,3 +55,5 @@ Por último execute o comando
 * Typeorm
 * Moment
 * Fast-glob
+
+### Para mais informações veja a pasta ./docs
