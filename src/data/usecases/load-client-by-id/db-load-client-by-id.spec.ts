@@ -39,4 +39,17 @@ describe('DbLoadClientById', () => {
     await sut.loadById('any_id')
     expect(loadByIdSpy).toHaveBeenCalledWith('any_id')
   })
+  test('Should return Client on success', async () => {
+    const { sut } = makeSut()
+    const client = await sut.loadById('any_id')
+    expect(client).toEqual({
+      id: 'valid_id',
+      name: 'valid_name',
+      lastname: 'valid_lastname',
+      genre: 'valid_genre',
+      birthdate: 'valid_birthdate',
+      age: 'valid_age',
+      city: 'valid_city'
+    })
+  })
 })
