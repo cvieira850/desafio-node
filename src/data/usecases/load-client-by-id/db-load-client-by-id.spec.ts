@@ -52,4 +52,10 @@ describe('DbLoadClientById', () => {
       city: 'valid_city'
     })
   })
+  test('Should throw if LoadClientByIdRepository throws', async () => {
+    const { sut,loadClientByIdRepositoryStub } = makeSut()
+    jest.spyOn(loadClientByIdRepositoryStub,'loadById').mockReturnValueOnce(new Promise((resolve,reject) => reject(new Error())))
+    const promise = sut.loadById('any_id')
+    await expect(promise).rejects.toThrow()
+  })
 })
