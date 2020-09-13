@@ -1,5 +1,4 @@
-import { ClientModel } from '../../../domain/models/client'
-import { LoadClientByIdRepository } from '../../protocols/load-client-by-id-repository'
+import { ClientModel,LoadClientByIdRepository } from './db-load-client-by-id-protocols'
 import { DbLoadClientById } from './db-load-client-by-id'
 
 describe('DbLoadClientById', () => {
