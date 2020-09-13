@@ -5,7 +5,7 @@ import { LoadClientByIdRepository } from '../../protocols/load-client-by-id-repo
 export class DbLoadClientById implements LoadClientById {
   constructor (private readonly loadClientByIdRepository: LoadClientByIdRepository) {}
   async loadById (id: string): Promise<ClientModel> {
-    await this.loadClientByIdRepository.loadById(id)
-    return null
+    const client = await this.loadClientByIdRepository.loadById(id)
+    return client
   }
 }
