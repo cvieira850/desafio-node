@@ -51,4 +51,20 @@ describe('DbChangeClientName Usecase', () => {
     const promise = sut.update(clientData)
     await expect(promise).rejects.toThrow()
   })
+  test('Should return Client on success', async () => {
+    const { sut } = makeSut()
+    const client = await sut.update({
+      id: 'valid_id',
+      name: 'valid_name'
+    })
+    expect(client).toEqual({
+      id: 'valid_id',
+      name: 'valid_name',
+      lastname: 'valid_lastname',
+      genre: 'valid_genre',
+      birthdate: 'valid_birthdate',
+      age: 'valid_age',
+      city: 'valid_city'
+    })
+  })
 })
