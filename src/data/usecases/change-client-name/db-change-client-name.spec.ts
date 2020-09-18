@@ -41,4 +41,14 @@ describe('DbChangeClientName Usecase', () => {
       name: 'valid_name'
     })
   })
+  test('Should throw if ChangeClientNameRepository throws',async () => {
+    const { sut,changeClientNameRepositoryStub } = makeSut()
+    jest.spyOn(changeClientNameRepositoryStub,'update').mockReturnValueOnce(new Promise((resolve,reject) => reject(new Error())))
+    const clientData = {
+      id: 'valid_id',
+      name: 'valid_name'
+    }
+    const promise = sut.update(clientData)
+    await expect(promise).rejects.toThrow()
+  })
 })
