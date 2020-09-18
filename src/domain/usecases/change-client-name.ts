@@ -1,5 +1,10 @@
 import { ClientModel } from '../models/client'
 
+export interface ChangeClientNameModel {
+  name: string
+  id: string
+}
+
 export interface ChangeClientName {
-  change: (name: string) => Promise<ClientModel>
+  update: (data: ChangeClientNameModel) => Promise<ClientModel>
 }
