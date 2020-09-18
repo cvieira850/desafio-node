@@ -3,7 +3,7 @@ import { ChangeClientName ,ChangeClientNameModel, ClientModel,ChangeClientNameRe
 export class DbChangeClientName implements ChangeClientName {
   constructor (private readonly changeClientNameRepository: ChangeClientNameRepository) {}
   async update (data: ChangeClientNameModel): Promise<ClientModel> {
-    await this.changeClientNameRepository.update(data)
-    return null
+    const client = await this.changeClientNameRepository.update(data)
+    return client
   }
 }
