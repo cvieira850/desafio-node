@@ -105,7 +105,7 @@ describe('update()', () => {
     await connection.close()
   })
 
-  test('Should load a client on success', async () => {
+  test('Should update a client on success', async () => {
     const sut = makeSut()
     const res = await sut.add({
       name: 'valid_name',
