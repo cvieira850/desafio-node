@@ -1,7 +1,5 @@
 import { ChangeClientNameController } from './changenameclient'
-import { LoadClientById,ClientModel } from './changenameclient-protocols'
-import { InvalidParamError } from '../../errors'
-import { forbidden, serverError } from '../../helpers/http-helper'
+import { LoadClientById,ClientModel, InvalidParamError, serverError, forbidden, ChangeClientNameModel, ChangeClientName } from './changenameclient-protocols'
 
 const makeLoadClientById = (): LoadClientById => {
   class LoadClientByIdStub implements LoadClientById {
@@ -19,15 +17,34 @@ const makeLoadClientById = (): LoadClientById => {
   }
   return new LoadClientByIdStub()
 }
+const makeChangeClientNameStub = (): ChangeClientName => {
+  class ChangeClientNameStub implements ChangeClientName {
+    async update (data: ChangeClientNameModel): Promise<ClientModel> {
+      return {
+        id: 'valid_id',
+        name: 'new_name',
+        lastname: 'valid_lastname',
+        genre: 'valid_genre',
+        birthdate: 'valid_birthdate',
+        age: 'valid_age',
+        city: 'valid_city'
+      }
+    }
+  }
+  return new ChangeClientNameStub()
+}
 interface SutTypes {
   sut: ChangeClientNameController
   loadClientByIdStub: LoadClientById
+  changeClientNameStub: ChangeClientName
 }
 const makeSut = (): SutTypes => {
   const loadClientByIdStub = makeLoadClientById()
-  const sut = new ChangeClientNameController(loadClientByIdStub)
+  const changeClientNameStub = makeChangeClientNameStub()
+  const sut = new ChangeClientNameController(loadClientByIdStub, changeClientNameStub)
   return {
     loadClientByIdStub,
+    changeClientNameStub,
     sut
   }
 }
@@ -38,6 +55,9 @@ describe('ChangeClientName Controller', () => {
     await sut.handle({
       params: {
         id: 'any_id'
+      },
+      body: {
+        name: 'any_name'
       }
     })
     expect(loaaByIdSpy).toHaveBeenCalledWith('any_id')
@@ -48,6 +68,9 @@ describe('ChangeClientName Controller', () => {
     const httpResponse = await sut.handle({
       params: {
         id: 'any_id'
+      },
+      body: {
+        name: 'any_name'
       }
     })
     expect(httpResponse).toEqual(forbidden(new InvalidParamError('id')))
@@ -58,8 +81,27 @@ describe('ChangeClientName Controller', () => {
     const httpResponse = await sut.handle({
       params: {
         id: 'any_id'
+      },
+      body: {
+        name: 'any_name'
       }
     })
     expect(httpResponse).toEqual(serverError())
+  })
+  test('Should call ChangeClientName with correct values ', async () => {
+    const { sut, changeClientNameStub } = makeSut()
+    const updateSpy = jest.spyOn(changeClientNameStub, 'update')
+    await sut.handle({
+      params: {
+        id: 'valid_id'
+      },
+      body: {
+        name: 'new_name'
+      }
+    })
+    expect(updateSpy).toHaveBeenCalledWith({
+      id: 'valid_id',
+      name: 'new_name'
+    })
   })
 })
