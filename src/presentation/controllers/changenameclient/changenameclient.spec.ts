@@ -1,5 +1,5 @@
 import { ChangeClientNameController } from './changenameclient'
-import { LoadClientById,ClientModel, InvalidParamError, serverError, forbidden, ChangeClientNameModel, ChangeClientName } from './changenameclient-protocols'
+import { LoadClientById,ClientModel, InvalidParamError, serverError,ok, forbidden, ChangeClientNameModel, ChangeClientName } from './changenameclient-protocols'
 
 const makeLoadClientById = (): LoadClientById => {
   class LoadClientByIdStub implements LoadClientById {
@@ -116,5 +116,25 @@ describe('ChangeClientName Controller', () => {
       }
     })
     expect(httpResponse).toEqual(serverError())
+  })
+  test('Should return 200 on success ',async () => {
+    const { sut } = makeSut()
+    const httpResponse = await sut.handle({
+      params: {
+        id: 'valid_id'
+      },
+      body: {
+        name: 'new_name'
+      }
+    })
+    expect(httpResponse).toEqual(ok({
+      id: 'valid_id',
+      name: 'new_name',
+      lastname: 'valid_lastname',
+      genre: 'valid_genre',
+      birthdate: 'valid_birthdate',
+      age: 'valid_age',
+      city: 'valid_city'
+    }))
   })
 })
