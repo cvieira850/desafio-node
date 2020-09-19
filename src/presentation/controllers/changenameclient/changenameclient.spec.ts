@@ -1,7 +1,7 @@
 import { ChangeClientNameController } from './changenameclient'
 import { LoadClientById,ClientModel } from './changenameclient-protocols'
 import { InvalidParamError } from '../../errors'
-import { forbidden } from '../../helpers/http-helper'
+import { forbidden, serverError } from '../../helpers/http-helper'
 
 const makeLoadClientById = (): LoadClientById => {
   class LoadClientByIdStub implements LoadClientById {
@@ -21,20 +21,20 @@ const makeLoadClientById = (): LoadClientById => {
 }
 interface SutTypes {
   sut: ChangeClientNameController
-  loadClientById: LoadClientById
+  loadClientByIdStub: LoadClientById
 }
 const makeSut = (): SutTypes => {
-  const loadClientById = makeLoadClientById()
-  const sut = new ChangeClientNameController(loadClientById)
+  const loadClientByIdStub = makeLoadClientById()
+  const sut = new ChangeClientNameController(loadClientByIdStub)
   return {
-    loadClientById,
+    loadClientByIdStub,
     sut
   }
 }
 describe('ChangeClientName Controller', () => {
   test('Should call LoadClientById with correct values', async () => {
-    const { sut, loadClientById } = makeSut()
-    const loaaByIdSpy = jest.spyOn(loadClientById, 'loadById')
+    const { sut, loadClientByIdStub } = makeSut()
+    const loaaByIdSpy = jest.spyOn(loadClientByIdStub, 'loadById')
     await sut.handle({
       params: {
         id: 'any_id'
@@ -43,13 +43,23 @@ describe('ChangeClientName Controller', () => {
     expect(loaaByIdSpy).toHaveBeenCalledWith('any_id')
   })
   test('Should return 403 if LoadClientById returns null ', async () => {
-    const { sut, loadClientById } = makeSut()
-    jest.spyOn(loadClientById, 'loadById').mockReturnValueOnce(new Promise(resolve => resolve(null)))
+    const { sut, loadClientByIdStub } = makeSut()
+    jest.spyOn(loadClientByIdStub, 'loadById').mockReturnValueOnce(new Promise(resolve => resolve(null)))
     const httpResponse = await sut.handle({
       params: {
         id: 'any_id'
       }
     })
     expect(httpResponse).toEqual(forbidden(new InvalidParamError('id')))
+  })
+  test('Should return 500 if LoadClientById throws ',async () => {
+    const { sut, loadClientByIdStub } = makeSut()
+    jest.spyOn(loadClientByIdStub, 'loadById').mockReturnValueOnce(new Promise((resolve,reject) => reject(new Error())))
+    const httpResponse = await sut.handle({
+      params: {
+        id: 'any_id'
+      }
+    })
+    expect(httpResponse).toEqual(serverError())
   })
 })
