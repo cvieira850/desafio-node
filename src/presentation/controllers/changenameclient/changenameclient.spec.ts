@@ -1,5 +1,7 @@
 import { ChangeClientNameController } from './changenameclient'
 import { LoadClientById,ClientModel } from './changenameclient-protocols'
+import { InvalidParamError } from '../../errors'
+import { forbidden } from '../../helpers/http-helper'
 
 const makeLoadClientById = (): LoadClientById => {
   class LoadClientByIdStub implements LoadClientById {
@@ -30,7 +32,7 @@ const makeSut = (): SutTypes => {
   }
 }
 describe('ChangeClientName Controller', () => {
-  test('Should call LoadSurveyById with correct values', async () => {
+  test('Should call LoadClientById with correct values', async () => {
     const { sut, loadClientById } = makeSut()
     const loaaByIdSpy = jest.spyOn(loadClientById, 'loadById')
     await sut.handle({
@@ -39,5 +41,15 @@ describe('ChangeClientName Controller', () => {
       }
     })
     expect(loaaByIdSpy).toHaveBeenCalledWith('any_id')
+  })
+  test('Should return 403 if LoadClientById returns null ', async () => {
+    const { sut, loadClientById } = makeSut()
+    jest.spyOn(loadClientById, 'loadById').mockReturnValueOnce(new Promise(resolve => resolve(null)))
+    const httpResponse = await sut.handle({
+      params: {
+        id: 'any_id'
+      }
+    })
+    expect(httpResponse).toEqual(forbidden(new InvalidParamError('id')))
   })
 })
