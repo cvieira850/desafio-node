@@ -2,6 +2,9 @@ import { ClientPgRepository } from './client'
 import { Connection, getConnection } from 'typeorm'
 import createConnection from '../typeorm/index'
 let connection: Connection
+const makeSut = (): ClientPgRepository => {
+  return new ClientPgRepository()
+}
 describe('add()', () => {
   beforeAll(async () => {
     connection = await createConnection()
@@ -23,9 +26,7 @@ describe('add()', () => {
     await mainConnection.close()
     await connection.close()
   })
-  const makeSut = (): ClientPgRepository => {
-    return new ClientPgRepository()
-  }
+
   test('Should return a client on success', async () => {
     const sut = makeSut()
     const client = await sut.add({
@@ -67,9 +68,7 @@ describe('LoadById()', () => {
     await mainConnection.close()
     await connection.close()
   })
-  const makeSut = (): ClientPgRepository => {
-    return new ClientPgRepository()
-  }
+
   test('Should load a client on success', async () => {
     const sut = makeSut()
     const res = await sut.add({
@@ -82,5 +81,46 @@ describe('LoadById()', () => {
     })
     const client = await sut.loadById(res.id)
     expect(client).toBeTruthy()
+  })
+})
+describe('update()', () => {
+  beforeAll(async () => {
+    connection = await createConnection()
+
+    await connection.query('DROP TABLE IF EXISTS cities')
+    await connection.query('DROP TABLE IF EXISTS clients')
+    await connection.query('DROP TABLE IF EXISTS migrations')
+
+    await connection.runMigrations()
+  })
+
+  beforeEach(async () => {
+    await connection.query('DELETE FROM cities')
+    await connection.query('DELETE FROM clients')
+  })
+
+  afterAll(async () => {
+    const mainConnection = getConnection()
+    await mainConnection.close()
+    await connection.close()
+  })
+
+  test('Should load a client on success', async () => {
+    const sut = makeSut()
+    const res = await sut.add({
+      name: 'valid_name',
+      lastname: 'valid_lastname',
+      genre: 'valid_genre',
+      age: 'valid_age',
+      city: 'valid_city',
+      birthdate: 'valid_birthdate'
+    })
+    await sut.loadById(res.id)
+    const clientChanged = await sut.update({
+      id: res.id,
+      name: 'new_name'
+    })
+    expect(clientChanged).toBeTruthy()
+    expect(clientChanged.name).toBe('new_name')
   })
 })
