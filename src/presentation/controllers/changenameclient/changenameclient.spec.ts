@@ -104,4 +104,17 @@ describe('ChangeClientName Controller', () => {
       name: 'new_name'
     })
   })
+  test('Should return 500 if ChangeClientName throws ',async () => {
+    const { sut, changeClientNameStub } = makeSut()
+    jest.spyOn(changeClientNameStub, 'update').mockReturnValueOnce(new Promise((resolve,reject) => reject(new Error())))
+    const httpResponse = await sut.handle({
+      params: {
+        id: 'any_id'
+      },
+      body: {
+        name: 'any_name'
+      }
+    })
+    expect(httpResponse).toEqual(serverError())
+  })
 })
