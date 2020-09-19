@@ -81,6 +81,13 @@ describe('LoadById()', () => {
     })
     const client = await sut.loadById(res.id)
     expect(client).toBeTruthy()
+    expect(client.id).toBe(res.id)
+    expect(client.name).toBe('valid_name')
+    expect(client.lastname).toBe('valid_lastname')
+    expect(client.genre).toBe('valid_genre')
+    expect(client.age).toBe('valid_age')
+    expect(client.city).toBe('valid_city')
+    expect(client.birthdate).toBe('valid_birthdate')
   })
 })
 describe('update()', () => {
@@ -121,6 +128,7 @@ describe('update()', () => {
       name: 'new_name'
     })
     expect(clientChanged).toBeTruthy()
+    expect(clientChanged.id).toBe(res.id)
     expect(clientChanged.name).toBe('new_name')
   })
 })
