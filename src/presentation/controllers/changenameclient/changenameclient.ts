@@ -1,4 +1,4 @@
-import { Controller, HttpRequest, HttpResponse, ChangeClientName,LoadClientById, InvalidParamError, forbidden, serverError } from './changenameclient-protocols'
+import { Controller, HttpRequest, HttpResponse, ChangeClientName,LoadClientById, InvalidParamError, ok,forbidden, serverError } from './changenameclient-protocols'
 
 export class ChangeClientNameController implements Controller {
   constructor (
@@ -17,11 +17,11 @@ export class ChangeClientNameController implements Controller {
       if (!name) {
         return forbidden(new InvalidParamError('name'))
       }
-      await this.changeClientName.update({
+      const clientWithNewName = await this.changeClientName.update({
         id,
         name
       })
-      return null
+      return ok(clientWithNewName)
     } catch (error) {
       return serverError()
     }
