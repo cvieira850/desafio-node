@@ -23,6 +23,7 @@ export class ChangeClientNameController implements Controller {
       })
       return ok(clientWithNewName)
     } catch (error) {
+      console.log(error)
       return serverError()
     }
   }
