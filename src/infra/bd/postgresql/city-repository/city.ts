@@ -26,4 +26,10 @@ export class CityPgRepository implements AddCityRepository, LoadCityByNameReposi
     const cityArray = await CityRepository.find({ where: { name } })
     return cityArray
   }
+
+  async loadByState (state: string): Promise<CityModel[]> {
+    const CityRepository = getRepository(City)
+    const cityArray = await CityRepository.find({ where: { state } })
+    return cityArray
+  }
 }
