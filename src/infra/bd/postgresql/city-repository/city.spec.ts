@@ -71,3 +71,35 @@ describe('LoadByName()', () => {
     expect(city).toBeTruthy()
   })
 })
+describe('LoadByState()', () => {
+  beforeAll(async () => {
+    connection = await createConnection()
+
+    await connection.query('DROP TABLE IF EXISTS cities')
+    await connection.query('DROP TABLE IF EXISTS clients')
+    await connection.query('DROP TABLE IF EXISTS migrations')
+
+    await connection.runMigrations()
+  })
+
+  beforeEach(async () => {
+    await connection.query('DELETE FROM cities')
+    await connection.query('DELETE FROM clients')
+  })
+
+  afterAll(async () => {
+    const mainConnection = getConnection()
+    await mainConnection.close()
+    await connection.close()
+  })
+
+  test('Should load city on success', async () => {
+    const sut = makeSut()
+    const res = await sut.add({
+      name: 'valid_name',
+      state: 'valid_state'
+    })
+    const city = await sut.loadByState(res.state)
+    expect(city).toBeTruthy()
+  })
+})
