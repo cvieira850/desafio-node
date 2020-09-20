@@ -4,7 +4,7 @@ import request from 'supertest'
 import { Connection, getConnection } from 'typeorm'
 import createConnection from '../../infra/bd/postgresql/typeorm/index'
 let connection: Connection
-describe('Load City By Name Route', () => {
+describe('Load City By State Route', () => {
   beforeAll(async () => {
     connection = await createConnection()
 
@@ -25,17 +25,17 @@ describe('Load City By Name Route', () => {
     await mainConnection.close()
     await connection.close()
   })
-  test('Should return 200 on load city by name ', async () => {
+  test('Should return 200 on load city by state ', async () => {
     const res = await request(app)
       .post('/api/createcity')
       .send({
         name: 'Curicica',
         state: 'RJ'
       })
-    const { name } = res.body
+    const { state } = res.body
     await request(app)
       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-      .get(`/api/loadcitybyname/${name}`)
+      .get(`/api/loadcitybystate/${state}`)
       .expect(200)
   })
 })
