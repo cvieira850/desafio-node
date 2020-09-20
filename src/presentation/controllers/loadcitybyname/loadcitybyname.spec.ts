@@ -2,16 +2,16 @@ import { LoadCityByNameController } from './loadcitybyname'
 import { LoadCityByName,CityModel, InvalidParamError, serverError,ok, forbidden } from './loadcitybyname-protocols'
 
 const makeLoadCityByName = (): LoadCityByName => {
-  class LoadClientByIdStub implements LoadCityByName {
-    async loadByName (name: string): Promise<CityModel> {
-      return new Promise(resolve => resolve({
+  class LoadCityByNameStub implements LoadCityByName {
+    async loadByName (name: string): Promise<CityModel[]> {
+      return new Promise(resolve => resolve([{
         id: 'valid_id',
         name: 'valid_name',
         state: 'valid_state'
-      }))
+      }]))
     }
   }
-  return new LoadClientByIdStub()
+  return new LoadCityByNameStub()
 }
 
 interface SutTypes {
@@ -27,7 +27,7 @@ const makeSut = (): SutTypes => {
   }
 }
 describe('LoadCityByName Controller', () => {
-  test('Should call LoadClientById with correct values', async () => {
+  test('Should call LoadCityByName with correct values', async () => {
     const { sut, loadCityByNameStub } = makeSut()
     const loaaByNameSpy = jest.spyOn(loadCityByNameStub, 'loadByName')
     await sut.handle({
@@ -64,10 +64,10 @@ describe('LoadCityByName Controller', () => {
         name: 'any_name'
       }
     })
-    expect(httpResponse).toEqual(ok({
+    expect(httpResponse).toEqual(ok([{
       id: 'valid_id',
       name: 'valid_name',
       state: 'valid_state'
-    }))
+    }]))
   })
 })
