@@ -1,0 +1,5 @@
+export * from '../../protocols'
+export * from '../../../domain/usecases/delete-client'
+export * from '../../../domain/models/client'
+export * from '../../errors'
+export * from '../../helpers/http-helper'
