@@ -19,4 +19,10 @@ export class CityPgRepository implements AddCityRepository {
       id
     }
   }
+
+  async loadByName (name: string): Promise<CityModel[]> {
+    const CityRepository = getRepository(City)
+    const cityArray = await CityRepository.find({ where: { name } })
+    return cityArray
+  }
 }
