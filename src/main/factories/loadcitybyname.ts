@@ -1,4 +1,4 @@
-import { LoadCityByNameController } from '../../presentation/controllers/loadclientbyname/loadcitybyname'
+import { LoadCityByNameController } from '../../presentation/controllers/loadcitybyname/loadcitybyname'
 import { DbLoadCityByName } from '../../data/usecases/load-city-by-name/db-load-city-by-name'
 import { CityPgRepository } from '../../infra/bd/postgresql/city-repository/city'
 
