@@ -1,9 +1,9 @@
 import { CityModel,LoadCityByStateRepository } from './db-load-city-by-state-protocols'
-import { DbLoadCityByName } from './db-load-city-by-state'
+import { DbLoadCityByState } from './db-load-city-by-state'
 
-describe('DbLoadCityByName', () => {
+describe('DbLoadCityByState', () => {
   interface SutTypes {
-    sut: DbLoadCityByName
+    sut: DbLoadCityByState
     loadCityByStateRepositoryStub: LoadCityByStateRepository
   }
 
@@ -22,7 +22,7 @@ describe('DbLoadCityByName', () => {
   }
   const makeSut = (): SutTypes => {
     const loadCityByStateRepositoryStub = makeLoadCityByStateRepository()
-    const sut = new DbLoadCityByName(loadCityByStateRepositoryStub)
+    const sut = new DbLoadCityByState(loadCityByStateRepositoryStub)
     return {
       sut,
       loadCityByStateRepositoryStub
