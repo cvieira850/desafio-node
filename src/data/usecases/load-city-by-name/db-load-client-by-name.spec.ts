@@ -9,12 +9,12 @@ describe('DbLoadCityByName', () => {
 
   const makeLoadCityByNameRepository = (): LoadCityByNameRepository => {
     class LoadCityByNameRepositoryStub implements LoadCityByNameRepository {
-      async loadByName (name: string): Promise<CityModel> {
-        const fakeCity = {
+      async loadByName (name: string): Promise<CityModel[]> {
+        const fakeCity = [{
           id: 'valid_id',
           name: 'valid_name',
           state: 'valid_state'
-        }
+        }]
         return new Promise(resolve => resolve(fakeCity))
       }
     }
@@ -37,11 +37,11 @@ describe('DbLoadCityByName', () => {
   test('Should return City on success', async () => {
     const { sut } = makeSut()
     const city = await sut.loadByName('any_name')
-    expect(city).toEqual({
+    expect(city).toEqual([{
       id: 'valid_id',
       name: 'valid_name',
       state: 'valid_state'
-    })
+    }])
   })
   test('Should throw if LoadCityByNameRepository throws', async () => {
     const { sut,loadCityByNameRepositoryStub } = makeSut()
