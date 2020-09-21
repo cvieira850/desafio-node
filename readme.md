@@ -1,7 +1,7 @@
 # Desafio Node
 [![Author](https://img.shields.io/badge/author-CaioVieira-brightgreen)](https://github.com/cvieira850)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com)
-[![coverage](https://img.shields.io/badge/coverage-100%25-blue)]()
+[![coverage](https://img.shields.io/badge/coverage-100%25-blue)](https://jestjs.io/)
 
 # 🚧 Instalação
 **Para rodar o projeto é necessário ter [Node.js](https://nodejs.org/en/download/) , [Yarn](https://yarnpkg.com/), [Docker](https://docs.docker.com/docker-for-windows/install/) e clonar o projeto**
@@ -14,9 +14,13 @@
 
 Primeiro rode o comando do docker
 
-``` docker-compose up ```
+``` docker-compose up -b```
 
 Depois que o banco estiver online verificar se o banco está com a extensão uuid-ossp, caso não esteja instalar ela
+
+# Linux
+Caso esteja usando linux, após rodar o comando docker-compose up -b utilize esse comando
+``` sudo chmod -R 777 .data/postgresql  ```
 
 Depois rode  o comando
 
