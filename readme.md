@@ -20,6 +20,7 @@ Depois que o banco estiver online verificar se o banco está com a extensão uui
 
 # Linux
 Caso esteja usando linux, após rodar o comando docker-compose up -b utilize esse comando
+
 ``` sudo chmod -R 777 .data/postgresql  ```
 
 Depois rode  o comando
