@@ -62,7 +62,7 @@ describe('ChangeClientName Controller', () => {
     })
     expect(loaaByIdSpy).toHaveBeenCalledWith('any_id')
   })
-  test('Should return 403 if LoadClientById returns null ', async () => {
+  test('Should return 403 if LoadClientById no id is provided ', async () => {
     const { sut, loadClientByIdStub } = makeSut()
     jest.spyOn(loadClientByIdStub, 'loadById').mockReturnValueOnce(new Promise(resolve => resolve(null)))
     const httpResponse = await sut.handle({
@@ -103,6 +103,18 @@ describe('ChangeClientName Controller', () => {
       id: 'valid_id',
       name: 'new_name'
     })
+  })
+  test('Should return 403 if no name is provided ', async () => {
+    const { sut } = makeSut()
+    const httpResponse = await sut.handle({
+      params: {
+        id: 'any_id'
+      },
+      body: {
+
+      }
+    })
+    expect(httpResponse).toEqual(forbidden(new InvalidParamError('name')))
   })
   test('Should return 500 if ChangeClientName throws ',async () => {
     const { sut, changeClientNameStub } = makeSut()
