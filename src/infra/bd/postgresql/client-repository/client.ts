@@ -40,4 +40,11 @@ export class ClientPgRepository implements AddClientRepository, LoadClientByIdRe
     await ClientRepository.save(client)
     return client
   }
+
+  async delete (id: string): Promise<null> {
+    const ClientRepository = getRepository(Client)
+    const client = await ClientRepository.findOne(id)
+    await ClientRepository.remove(client)
+    return null
+  }
 }
