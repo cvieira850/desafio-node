@@ -132,3 +132,39 @@ describe('update()', () => {
     expect(clientChanged.name).toBe('new_name')
   })
 })
+describe('delete()', () => {
+  beforeAll(async () => {
+    connection = await createConnection()
+
+    await connection.query('DROP TABLE IF EXISTS cities')
+    await connection.query('DROP TABLE IF EXISTS clients')
+    await connection.query('DROP TABLE IF EXISTS migrations')
+
+    await connection.runMigrations()
+  })
+
+  beforeEach(async () => {
+    await connection.query('DELETE FROM cities')
+    await connection.query('DELETE FROM clients')
+  })
+
+  afterAll(async () => {
+    const mainConnection = getConnection()
+    await mainConnection.close()
+    await connection.close()
+  })
+
+  test('Should delete a client on success', async () => {
+    const sut = makeSut()
+    const res = await sut.add({
+      name: 'valid_name',
+      lastname: 'valid_lastname',
+      genre: 'valid_genre',
+      age: 'valid_age',
+      city: 'valid_city',
+      birthdate: 'valid_birthdate'
+    })
+    const client = await sut.delete(res.id)
+    expect(client).toEqual(null)
+  })
+})
