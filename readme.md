@@ -1,7 +1,8 @@
 # Desafio Node
 [![Author](https://img.shields.io/badge/author-CaioVieira-brightgreen)](https://github.com/cvieira850)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com)
-[!(https://img.shields.io/badge/coverage-100%25-blue)]
+[![coverage](https://img.shields.io/badge/coverage-100%25-blue)]()
+
 # 🚧 Instalação
 **Para rodar o projeto é necessário ter [Node.js](https://nodejs.org/en/download/) , [Yarn](https://yarnpkg.com/), [Docker](https://docs.docker.com/docker-for-windows/install/) e clonar o projeto**
 
